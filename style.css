@@ -1,0 +1,35 @@
+html {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: vertical;
+}
+
+#game-container {
+    position: relative;
+    border: 1px solid black;
+    width: 800px;
+    height: 800px;
+}
+
+#game-container .game-object {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    content: "";
+    border: 2px solid;
+    transition: top 0.7s linear, left 0.7s linear;
+}
+
+#game-container .game-object.rock {
+    border-color: gray;
+}
+
+#game-container .game-object.paper {
+    border-color: wheat;
+}
+
+#game-container .game-object.scissors {
+    border-color: red;
+}
