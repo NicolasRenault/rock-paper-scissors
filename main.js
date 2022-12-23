@@ -1,28 +1,47 @@
-const button = document.getElementById("game-button");
+const startButton = document.getElementById("game-button");
 const gameObjects = document.getElementsByClassName("game-object");
 
 let playing = false;
 const gameSpeed = 50;
 const numberOfObject = 75;
 
-button.addEventListener("click", buttonClick);
+startButton.addEventListener("click", startButtonClick);
 initGame();
 
-function buttonClick() {
+/**
+ * Init all the element of the page
+ */
+function initGame() {
+    createObjects();
+    setRandomPositionToGameObjects();
+    startButton.disabled = false;
+}
+
+/**
+ * Handle the click of the start button
+ */
+function startButtonClick() {
     playing = !playing;
+
     if (playing) {
-        button.innerHTML = "Stop";
+        startButton.innerHTML = "Stop";
     } else {
-        button.innerHTML = "Start";
+        startButton.innerHTML = "Start";
     }
 
     play();
 }
 
+/**
+ * Play or stop the game, depend of the playing boolean
+ * 
+ * @see playing
+ * @returns void
+ */
 async function play() {
     if (playing) {
         moveAllGameObjects();
-        handleTouch();
+        handleCollision();
         handleWinner();
         setTimeout(play, gameSpeed);
     } else {
@@ -30,19 +49,13 @@ async function play() {
     }
 }
 
-function initGame() {
-    createObjects();
-    setRandomPositionToGameObjects();
-    button.disabled = false;
-}
-
+/**
+ * Create all the game object on the page
+ */
 function createObjects() {
     let gameContainer = document.getElementById("game-container");
 
     for (let i = 0; i < numberOfObject; i++) {
-        // for (let j = 0; j < objectsType.length; j++) {
-        //   const element = array[j];
-        // }
         ["rock", "paper", "scissors"].forEach((type) => {
         let obj = document.createElement("div");
         obj.classList.add("game-object", type);
@@ -51,6 +64,9 @@ function createObjects() {
     }
 }
 
+/**
+ * Move all the game object to a random location
+ */
 function setRandomPositionToGameObjects() {
     Array.prototype.forEach.call(gameObjects, (element) => {
         element.style.top = getRandomBetweenTwoNumber(0, 90) + "%";
@@ -58,6 +74,9 @@ function setRandomPositionToGameObjects() {
     });
 }
 
+/**
+ * Move sligtly all the game oject randomly in 2D
+ */
 async function moveAllGameObjects() {
     Array.prototype.forEach.call(gameObjects, (element) => {
         let top =
@@ -84,16 +103,25 @@ async function moveAllGameObjects() {
     });
 }
 
-async function handleTouch() {
+/**
+ * Handle the collision of all the game object
+ */
+async function handleCollision() {
     Array.prototype.forEach.call(gameObjects, (i) => {
         Array.prototype.forEach.call(gameObjects, (j) => {
         if (isCollide(i, j)) {
             handleTypeWinner(i, j);
         }
         });
-  });
+    });
 }
 
+/**
+ * Handle the "rock < paper < scissors < rock" behavior
+ * 
+ * @param {HTMLElement} a 
+ * @param {HTMLElement} b 
+ */
 function handleTypeWinner(a, b) {
     if (a.classList.contains("rock")) {
         if (b.classList.contains("paper")) {
@@ -122,34 +150,49 @@ function handleTypeWinner(a, b) {
     }
 }
 
+/**
+ * Check if there is only one type of game object left on the game to stop the game
+ */
 async function handleWinner() {
-    let lastType = null;
-    let find = false;
+    let firstType = null;
+    let findDifferentType = false;
 
     Array.prototype.forEach.call(gameObjects, (element) => {
         let currentType = Array.from(element.classList).filter((classes) => {
-        return classes === "rock" || classes == "paper" || classes === "scissors";
-        });
+            return classes === "rock" || classes == "paper" || classes === "scissors";
+        })[0];
+        
+        if (firstType === null) firstType = currentType;
 
-        if (lastType === null) lastType = currentType;
-
-        if (currentType !== lastType) {
-        //TODO Not working
-        find = true;
-        return;
+        if (currentType !== firstType) {
+            findDifferentType = true;
+            return;
         }
     });
 
-    console.log(find);
-    if (!find) {
+    if (!findDifferentType) {
         playing = false;
     }
 }
 
+/**
+ * Get a random number between a range of two int
+ * 
+ * @param {int} min 
+ * @param {int} max 
+ * @returns int
+ */
 function getRandomBetweenTwoNumber(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
+    return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+/**
+ * Check if two HTMLElement collide on the page
+ * 
+ * @param {HTMLElement} a 
+ * @param {HTMLElement} b 
+ * @returns boolean
+ */
 function isCollide(a, b) {
     var aRect = a.getBoundingClientRect();
     var bRect = b.getBoundingClientRect();
