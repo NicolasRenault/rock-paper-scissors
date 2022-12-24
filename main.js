@@ -1,7 +1,11 @@
 const startButton = document.getElementById("game-button");
 const gameObjects = document.getElementsByClassName("game-object");
+const audio = new Audio("public/audio/pop.flac");
+audio.volume = 0.2; 
 
 let playing = false;
+let finished = false;
+
 const gameSpeed = 50;
 const numberOfObject = 75;
 
@@ -12,9 +16,21 @@ initGame();
  * Init all the element of the page
  */
 function initGame() {
+    playing = false;
+    finished = false;
     createObjects();
     setRandomPositionToGameObjects();
     startButton.disabled = false;
+}
+
+/**
+ * Reset the game by removing and re initing all the element of the page
+ */
+function resetGame() {
+    console.log("reset")
+    startButton.disabled = true;
+    removeAllObjects();
+    initGame();
 }
 
 /**
@@ -23,10 +39,14 @@ function initGame() {
 function startButtonClick() {
     playing = !playing;
 
+    console.log("playing: " + playing);
+    console.log("finished: " + finished);
+
     if (playing) {
-        startButton.innerHTML = "Stop";
+        startButton.innerHTML = "Reset";
     } else {
         startButton.innerHTML = "Start";
+        resetGame();
     }
 
     play();
@@ -39,7 +59,8 @@ function startButtonClick() {
  * @returns void
  */
 async function play() {
-    if (playing) {
+    console.log("playing");
+    if (playing && !finished) {
         moveAllGameObjects();
         handleCollision();
         handleWinner();
@@ -47,6 +68,15 @@ async function play() {
     } else {
         return;
     }
+}
+
+/**
+ * Remove all the game object from the page
+ */
+function removeAllObjects() {
+    let gameContainer = document.getElementById("game-container");
+
+    gameContainer.innerHTML = "";
 }
 
 /**
@@ -110,7 +140,11 @@ async function handleCollision() {
     Array.prototype.forEach.call(gameObjects, (i) => {
         Array.prototype.forEach.call(gameObjects, (j) => {
         if (isCollide(i, j)) {
-            handleTypeWinner(i, j);
+            let changed = handleTypeWinner(i, j); 
+            
+            if (changed) {
+                playPopSound();
+            }
         }
         });
     });
@@ -118,36 +152,48 @@ async function handleCollision() {
 
 /**
  * Handle the "rock < paper < scissors < rock" behavior
+ * Return true if changed
  * 
  * @param {HTMLElement} a 
  * @param {HTMLElement} b 
+ * @returns boolean
  */
 function handleTypeWinner(a, b) {
+    let changed = false;
+
     if (a.classList.contains("rock")) {
         if (b.classList.contains("paper")) {
-        a.classList.remove("rock");
-        a.classList.add("paper");
+            a.classList.remove("rock");
+            a.classList.add("paper");
+            changed = true;
         } else if (b.classList.contains("scissors")) {
-        b.classList.remove("scissors");
-        b.classList.add("rock");
+            b.classList.remove("scissors");
+            b.classList.add("rock");
+            changed = true;
         }
     } else if (a.classList.contains("paper")) {
         if (b.classList.contains("rock")) {
-        b.classList.remove("rock");
-        b.classList.add("paper");
+            b.classList.remove("rock");
+            b.classList.add("paper");
+            changed = true;
         } else if (b.classList.contains("scissors")) {
-        a.classList.remove("paper");
-        a.classList.add("scissors");
+            a.classList.remove("paper");
+            a.classList.add("scissors");
+            changed = true;
         }
     } else if (a.classList.contains("scissors")) {
         if (b.classList.contains("paper")) {
-        b.classList.remove("paper");
-        b.classList.add("scissors");
+            b.classList.remove("paper");
+            b.classList.add("scissors");
+            changed = true;
         } else if (b.classList.contains("rock")) {
-        a.classList.remove("scissors");
-        a.classList.add("rock");
+            a.classList.remove("scissors");
+            a.classList.add("rock");
+            changed = true;
         }
     }
+
+    return changed;
 }
 
 /**
@@ -171,8 +217,15 @@ async function handleWinner() {
     });
 
     if (!findDifferentType) {
-        playing = false;
+        finished = true;
     }
+}
+
+/**
+ * Play a pop sound
+ */
+function playPopSound() {
+    audio.play(); // ? Is this really a good idea 
 }
 
 /**
