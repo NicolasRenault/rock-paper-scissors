@@ -24,12 +24,22 @@ html {
 
 #game-container .game-object.rock {
     border-color: gray;
+    /* content: ""; */
 }
+/* #game-container .game-object.rock::before {
+    content: "🪨";
+} */
 
 #game-container .game-object.paper {
     border-color: wheat;
 }
+/* #game-container .game-object.paper::before {
+    content: "📃";
+} */
 
 #game-container .game-object.scissors {
     border-color: red;
 }
+/* #game-container .game-object.scissors::before {
+    content: "✂️";
+} */

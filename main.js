@@ -1,15 +1,32 @@
 const startButton = document.getElementById("game-button");
 const gameObjects = document.getElementsByClassName("game-object");
+const numberOfObjectInput = document.getElementById("number-of-object");
+const gameSpeedInput = document.getElementById("game-speed");
+const movementSpeedInput = document.getElementById("movement-speed");
+const playSoundInput = document.getElementById("play-sound");
+
 const audio = new Audio("public/audio/pop.flac");
 audio.volume = 0.2; 
 
 let playing = false;
 let finished = false;
 
-const gameSpeed = 50;
-const numberOfObject = 75;
+let numberOfObject = 75;
+let gameSpeed = 50;
+let movementSpeed = 2;
+let playSound = true;
 
 startButton.addEventListener("click", startButtonClick);
+numberOfObjectInput.addEventListener("focusout", changeGameConfig);
+gameSpeedInput.addEventListener("focusout", changeGameConfig);
+movementSpeedInput.addEventListener("focusout", changeGameConfig);
+playSoundInput.addEventListener("change", changeGameConfig);
+
+numberOfObjectInput.value = numberOfObject;
+gameSpeedInput.value = gameSpeed;
+movementSpeedInput.value = movementSpeed;
+playSoundInput.checked = playSound;
+
 initGame();
 
 /**
@@ -27,7 +44,6 @@ function initGame() {
  * Reset the game by removing and re initing all the element of the page
  */
 function resetGame() {
-    console.log("reset")
     startButton.disabled = true;
     removeAllObjects();
     initGame();
@@ -38,9 +54,6 @@ function resetGame() {
  */
 function startButtonClick() {
     playing = !playing;
-
-    console.log("playing: " + playing);
-    console.log("finished: " + finished);
 
     if (playing) {
         startButton.innerHTML = "Reset";
@@ -59,7 +72,6 @@ function startButtonClick() {
  * @returns void
  */
 async function play() {
-    console.log("playing");
     if (playing && !finished) {
         moveAllGameObjects();
         handleCollision();
@@ -87,9 +99,9 @@ function createObjects() {
 
     for (let i = 0; i < numberOfObject; i++) {
         ["rock", "paper", "scissors"].forEach((type) => {
-        let obj = document.createElement("div");
-        obj.classList.add("game-object", type);
-        gameContainer.appendChild(obj);
+            let obj = document.createElement("div");
+            obj.classList.add("game-object", type);
+            gameContainer.appendChild(obj);
         });
     }
 }
@@ -110,7 +122,7 @@ function setRandomPositionToGameObjects() {
 async function moveAllGameObjects() {
     Array.prototype.forEach.call(gameObjects, (element) => {
         let top =
-        element.style.top.replace("%", "") - getRandomBetweenTwoNumber(-2, 2);
+        element.style.top.replace("%", "") - getRandomBetweenTwoNumber(-movementSpeed, movementSpeed);
 
         if (top > 95) {
         top = 95;
@@ -121,7 +133,7 @@ async function moveAllGameObjects() {
         element.style.top = top + "%";
 
         let left =
-        element.style.left.replace("%", "") - getRandomBetweenTwoNumber(-2, 2);
+        element.style.left.replace("%", "") - getRandomBetweenTwoNumber(-movementSpeed, movementSpeed);
 
         if (left > 95) {
         left = 95;
@@ -225,7 +237,37 @@ async function handleWinner() {
  * Play a pop sound
  */
 function playPopSound() {
-    audio.play(); // ? Is this really a good idea 
+    if (playSound) audio.play(); // ? Is this really a good idea 
+}
+
+/**
+ * Set the value changed by the user into the config game
+ * 
+ * @param {Event} event 
+ */
+function changeGameConfig(event) {
+    switch (event.target.id) {
+        case "number-of-object":
+            numberOfObject = event.target.value;
+            break;
+
+        case "game-speed":
+            gameSpeed = event.target.value;
+                
+            break;
+
+        case "movement-speed":
+            movementSpeed = event.target.value;
+            break;
+
+        case "play-sound":
+            playSound = event.target.checked;
+            break;
+    
+        default:
+            console.log("default");
+            break;
+    }
 }
 
 /**

@@ -11,7 +11,13 @@
   <body>
     <h1>Rock Paper Scissors</h1>
     <div id="game-container"></div>
-    <button id="game-button" disabled>Start</button>
+    <div id="input-container">
+      <button id="game-button" disabled>Start</button>
+      <input type="number" id="number-of-object" name="Number of object" min="1" max="1000">
+      <input type="number" id="game-speed" name="Game speed" min="1" max="1000">
+      <input type="number" id="movement-speed" name="Movement speed" min="1" max="100">
+      <input type="checkbox" id="play-sound" name="Play sound">
+    </div>
   </body>
 </html>
 
