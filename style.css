@@ -1,45 +1,51 @@
-html {
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: vertical;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-#game-container {
-    position: relative;
-    border: 1px solid black;
-    width: 800px;
-    height: 800px;
+h1 span {
+    @apply relative translate-x-10 underline cursor-default before:absolute before:border-3 before:border-solid before:w-[2.5rem] before:h-[2.5rem] before:content-[''] before:top-[px] before:left-[-45px];
+}
+h1 span.rock {
+    @apply decoration-rock hover:text-rock before:border-rock;
+}
+h1 span.paper {
+    @apply decoration-paper hover:text-paper before:border-paper;
+}
+h1 span.scissors {
+    @apply decoration-scissors hover:text-scissors before:border-scissors;
 }
 
 #game-container .game-object {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    content: "";
-    border: 2px solid;
+    @apply absolute border-2 border-solid w-[2rem] h-[2rem];
     transition: top 0.7s linear, left 0.7s linear;
 }
-
 #game-container .game-object.rock {
-    border-color: gray;
-    /* content: ""; */
+    @apply border-rock
 }
-/* #game-container .game-object.rock::before {
-    content: "🪨";
-} */
-
 #game-container .game-object.paper {
-    border-color: wheat;
+    @apply border-paper
 }
-/* #game-container .game-object.paper::before {
-    content: "📃";
-} */
-
 #game-container .game-object.scissors {
-    border-color: red;
+    @apply border-scissors
 }
-/* #game-container .game-object.scissors::before {
-    content: "✂️";
-} */
+
+/** Prevent label from breaking */
+label {
+    word-spacing: -4px;
+}
+
+/* Checkbox by https://codepen.io/lhermann/pen/EBGZRZ */
+input:checked ~ .dot {
+    @apply bg-secondary-light;
+    transform: translateX(100%);
+}
+
+/* Input Number by https://tailwindcomponents.com/component/number-input-counter */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+}

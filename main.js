@@ -11,16 +11,17 @@ audio.volume = 0.2;
 let playing = false;
 let finished = false;
 
-let numberOfObject = 75;
+
+let numberOfObject = (window.innerWidth > 768) ? 75 : 50;
 let gameSpeed = 50;
 let movementSpeed = 2;
-let playSound = true;
+let playSound = false;
 
 startButton.addEventListener("click", startButtonClick);
-numberOfObjectInput.addEventListener("focusout", changeGameConfig);
-gameSpeedInput.addEventListener("focusout", changeGameConfig);
-movementSpeedInput.addEventListener("focusout", changeGameConfig);
-playSoundInput.addEventListener("change", changeGameConfig);
+numberOfObjectInput.addEventListener("change", changeGameConfigEvent);
+gameSpeedInput.addEventListener("change", changeGameConfigEvent);
+movementSpeedInput.addEventListener("change", changeGameConfigEvent);
+playSoundInput.addEventListener("change", changeGameConfigEvent);
 
 numberOfObjectInput.value = numberOfObject;
 gameSpeedInput.value = gameSpeed;
@@ -111,8 +112,8 @@ function createObjects() {
  */
 function setRandomPositionToGameObjects() {
     Array.prototype.forEach.call(gameObjects, (element) => {
-        element.style.top = getRandomBetweenTwoNumber(0, 90) + "%";
-        element.style.left = getRandomBetweenTwoNumber(0, 90) + "%";
+        element.style.top = getRandomBetweenTwoNumber(0, 94) + "%";
+        element.style.left = getRandomBetweenTwoNumber(0, 94) + "%";
     });
 }
 
@@ -124,8 +125,8 @@ async function moveAllGameObjects() {
         let top =
         element.style.top.replace("%", "") - getRandomBetweenTwoNumber(-movementSpeed, movementSpeed);
 
-        if (top > 95) {
-        top = 95;
+        if (top > 94) {
+        top = 94;
         } else if (top < 0) {
         top = 0;
         }
@@ -135,8 +136,8 @@ async function moveAllGameObjects() {
         let left =
         element.style.left.replace("%", "") - getRandomBetweenTwoNumber(-movementSpeed, movementSpeed);
 
-        if (left > 95) {
-        left = 95;
+        if (left > 94) {
+        left = 94;
         } else if (left < 0) {
         left = 0;
         }
@@ -245,27 +246,47 @@ function playPopSound() {
  * 
  * @param {Event} event 
  */
-function changeGameConfig(event) {
-    switch (event.target.id) {
+function changeGameConfigEvent(event) {
+    changeGameConfig(event.target);
+}
+
+/**
+ * Set the value changed by the user into the config game
+ * 
+ * @param {HTMLElement} element 
+ */
+function changeGameConfig(element) {
+    
+    if (element.type === "number") {
+        if (Number(element.value) < Number(element.min)) {
+            element.value = element.min;
+            return;
+        } else if (Number(element.value) > Number(element.max)) {
+            element.value = element.max;
+            return;
+        }
+    }
+
+    switch (element.id) {
         case "number-of-object":
-            numberOfObject = event.target.value;
+            numberOfObject = element.value;
+            if (!playing || finished) resetGame();
             break;
 
         case "game-speed":
-            gameSpeed = event.target.value;
+            gameSpeed = element.value;
                 
             break;
 
         case "movement-speed":
-            movementSpeed = event.target.value;
+            movementSpeed = element.value;
             break;
 
         case "play-sound":
-            playSound = event.target.checked;
+            playSound = element.checked;
             break;
     
         default:
-            console.log("default");
             break;
     }
 }
@@ -299,3 +320,73 @@ function isCollide(a, b) {
         aRect.left > bRect.left + bRect.width
     );
 }
+
+/**
+ * @author https://tailwindcomponents.com/component/number-input-counter
+ */
+function decrement(e) {
+    const btn = e.target.parentNode.parentElement.querySelector('button[data-action="decrement"]');
+    const target = btn.nextElementSibling;
+
+    let value = Number(target.value);
+    
+    if (value > Number(target.min)) {
+        value--;
+        target.value = value;
+        
+        /**
+         * Custom: Call changeGameConfig method to update the game config from button actions
+        */
+        changeGameConfig(target);
+    }
+    
+}
+
+/**
+ * @author https://tailwindcomponents.com/component/number-input-counter
+*/
+function increment(e) {
+    const btn = e.target.parentNode.parentElement.querySelector('button[data-action="decrement"]');
+    const target = btn.nextElementSibling;
+
+    let value = Number(target.value);
+
+    if (value < Number(target.max)) {
+        value++;
+        target.value = value;
+    
+        /**
+         * Custom: Call changeGameConfig method to update the game config from button actions
+         */
+        changeGameConfig(target);
+    }
+
+}
+
+/**
+ * @author https://tailwindcomponents.com/component/number-input-counter
+ */
+const decrementButtons = document.querySelectorAll(
+    `button[data-action="decrement"]`
+);
+
+/**
+ * @author https://tailwindcomponents.com/component/number-input-counter
+ */
+const incrementButtons = document.querySelectorAll(
+    `button[data-action="increment"]`
+);
+
+/**
+ * @author https://tailwindcomponents.com/component/number-input-counter
+ */
+decrementButtons.forEach(btn => {
+    btn.addEventListener("click", decrement);
+});
+
+/**
+ * @author https://tailwindcomponents.com/component/number-input-counter
+ */
+incrementButtons.forEach(btn => {
+    btn.addEventListener("click", increment);
+});
