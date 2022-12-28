@@ -1,5 +1,6 @@
 const startButton = document.getElementById("game-button");
 const gameObjects = document.getElementsByClassName("game-object");
+const objectTitles = document.getElementsByClassName("object-title");
 const numberOfObjectInput = document.getElementById("number-of-object");
 const gameSpeedInput = document.getElementById("game-speed");
 const movementSpeedInput = document.getElementById("movement-speed");
@@ -39,15 +40,17 @@ function initGame() {
     createObjects();
     setRandomPositionToGameObjects();
     startButton.disabled = false;
+    removeWinner();
 }
 
 /**
  * Reset the game by removing and re initing all the element of the page
- */
+*/
 function resetGame() {
     startButton.disabled = true;
     removeAllObjects();
     initGame();
+    removeWinner();
 }
 
 /**
@@ -231,6 +234,7 @@ async function handleWinner() {
 
     if (!findDifferentType) {
         finished = true;
+        setWinner(firstType);
     }
 }
 
@@ -289,6 +293,30 @@ function changeGameConfig(element) {
         default:
             break;
     }
+}
+
+/**
+ * Init a visual animation for the winner and losers
+ * 
+ * @param {String} winner 
+ */
+function setWinner(winner) {
+    Array.prototype.forEach.call(objectTitles, (element) => {
+        if (element.classList.contains(winner)) {
+            element.classList.add("winner");
+        } else {
+            element.classList.add("loser");
+        }
+    });
+}
+
+/**
+ * Remove all the winner and loser class
+ */
+function removeWinner() {
+    Array.prototype.forEach.call(objectTitles, (element) => {
+        element.classList.remove("winner", "loser");
+    });
 }
 
 /**

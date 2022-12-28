@@ -2,17 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-h1 span {
-    @apply relative translate-x-10 underline cursor-default before:absolute before:border-3 before:border-solid before:w-[2.5rem] before:h-[2.5rem] before:content-[''] before:top-[px] before:left-[-45px];
+.object-title {
+    @apply relative translate-x-10 underline cursor-default before:absolute before:border-3 before:border-solid before:w-[2.5rem] before:h-[2.5rem] before:content-[''] before:top-[5px] before:left-[-45px];
 }
-h1 span.rock {
+.object-title,
+.object-title::before {
+    transition: all 0.5s ease-in-out;
+}
+.object-title.rock {
     @apply decoration-rock hover:text-rock before:border-rock;
 }
-h1 span.paper {
+.object-title.paper {
     @apply decoration-paper hover:text-paper before:border-paper;
 }
-h1 span.scissors {
+.object-title.scissors {
     @apply decoration-scissors hover:text-scissors before:border-scissors;
+}
+.object-title.winner {
+    @apply text-6xl before:w-[3rem] before:h-[3rem] before:top-[8px] before:left-[-55px] before:border-4;
+}
+.object-title.loser {
+    @apply text-3xl before:w-[2.1rem] before:h-[2.1rem] before:top-[-2px] before:left-[-45px];
 }
 
 #game-container .game-object {
@@ -33,6 +43,8 @@ h1 span.scissors {
 label {
     word-spacing: -4px;
 }
+
+
 
 /* Checkbox by https://codepen.io/lhermann/pen/EBGZRZ */
 input:checked ~ .dot {
