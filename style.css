@@ -8,6 +8,7 @@
 .object-title,
 .object-title::before {
     transition: all 0.5s ease-in-out;
+    transition: color 0s;
 }
 .object-title.rock {
     @apply decoration-rock hover:text-rock before:border-rock;
