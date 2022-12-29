@@ -1,3 +1,5 @@
+import audioPop from './public/audio/pop.flac'
+
 const startButton = document.getElementById("game-button");
 const gameObjects = document.getElementsByClassName("game-object");
 const objectTitles = document.getElementsByClassName("object-title");
@@ -6,7 +8,7 @@ const gameSpeedInput = document.getElementById("game-speed");
 const movementSpeedInput = document.getElementById("movement-speed");
 const playSoundInput = document.getElementById("play-sound");
 
-const audio = new Audio("public/audio/pop.flac");
+const audio = new Audio(audioPop);
 audio.volume = 0.2; 
 
 let playing = false;
