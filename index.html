@@ -2,6 +2,7 @@
 <html lang="en" class="bg-primary text-font font-mono m-0 flex content-center items-center flex-col-reverse">
   <head>
     <meta charset="UTF-8" />
+    <meta name="description" content="Rock Paper Scissors simulator inspired by TikTok @rockpaperscissorsbattle" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="icon" href="/public/icon/RockPaperScissors.ico" />
@@ -20,53 +21,53 @@
       </div>
       <div id="input-container" class="grid grid-cols-2 gap-y-3">
         <!-- Input Number by https://tailwindcomponents.com/component/number-input-counter -->
-        <div class="custom-number-input">
-          <label for="number-of-object" class="w-full text-base font-semibold">Number of objects</label>
+        <div>
+          <label for="number-of-object" class="text-base font-semibold">Number of objects</label>
           <div class="flex flex-row h-10 w-5/6 rounded-lg relative bg-transparent mt-1 text-font-light">
-            <button data-action="decrement" class=" bg-secondary hover: hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
+            <button data-action="decrement" class=" bg-termary h-full w-20 rounded-l cursor-pointer outline-none">
               <span class="m-auto text-2xl font-thin">−</span>
             </button>
-            <input type="number" class="outline-none focus:outline-none text-center w-full bg-secondary font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center" id="number-of-object" name="Number of object" min="1" max="150"></input>
-            <button data-action="increment" class="bg-secondary hover: hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
+            <input type="number" class="outline-none focus:outline-none text-center bg-termary font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center" id="number-of-object" name="Number of object" min="1" max="150"></input>
+            <button data-action="increment" class="bg-termary h-full w-20 rounded-r cursor-pointer">
               <span class="m-auto text-2xl font-thin">+</span>
             </button>
           </div>
         </div>
           
         <!-- Input Number by https://tailwindcomponents.com/component/number-input-counter -->
-        <div class="custom-number-input">
-          <label for="game-speed" class="w-full text-base font-semibold">Game speed</label>
+        <div>
+          <label for="game-speed" class="text-base font-semibold">Game speed <i title="Lower is faster">?</i></label>
           <div class="flex flex-row h-10 w-5/6 rounded-lg relative bg-transparent mt-1 text-font-light">
-            <button data-action="decrement" class=" bg-secondary hover: hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
+            <button data-action="decrement" class=" bg-termary h-full w-20 rounded-l cursor-pointer outline-none">
               <span class="m-auto text-2xl font-thin">−</span>
             </button>
-            <input type="number" class="outline-none focus:outline-none text-center w-full bg-secondary font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center" id="game-speed" name="Game speed" min="1" max="1000"></input>
-            <button data-action="increment" class="bg-secondary hover: hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
+            <input type="number" class="outline-none focus:outline-none text-center bg-termary font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center" id="game-speed" name="Game speed" min="1" max="1000"></input>
+            <button data-action="increment" class="bg-termary h-full w-20 rounded-r cursor-pointer">
               <span class="m-auto text-2xl font-thin">+</span>
             </button>
           </div>
         </div>
 
         <!-- Input Number by https://tailwindcomponents.com/component/number-input-counter -->
-        <div class="custom-number-input">
-          <label for="game-speed" class="w-full text-base font-semibold">Movement speed</label>
+        <div>
+          <label for="movement-speed" class="text-base font-semibold">Movement speed</label>
           <div class="flex flex-row h-10 w-5/6 rounded-lg relative bg-transparent mt-1 text-font-light">
-            <button data-action="decrement" class=" bg-secondary hover: hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
+            <button data-action="decrement" class=" bg-termary h-full w-20 rounded-l cursor-pointer outline-none">
               <span class="m-auto text-2xl font-thin">−</span>
             </button>
-            <input type="number" class="outline-none focus:outline-none text-center w-full bg-secondary font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center" id="movement-speed" name="Movement speed" min="1" max="100"></input>
-            <button data-action="increment" class="bg-secondary hover: hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
+            <input type="number" class="outline-none focus:outline-none text-center bg-termary font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center" id="movement-speed" name="Movement speed" min="1" max="100"></input>
+            <button data-action="increment" class="bg-termary h-full w-20 rounded-r cursor-pointer">
               <span class="m-auto text-2xl font-thin">+</span>
             </button>
           </div>
         </div>
           
           <!-- Checkbox by https://codepen.io/lhermann/pen/EBGZRZ -->
-        <div class="flex items-center justify-center w-full translate-y-3">
+        <div class="flex items-center justify-center w-full translate-y-3 ">
           <label for="play-sound" class="flex items-center cursor-pointer">
             <div class="relative">
               <input id="play-sound" name="Play sound" type="checkbox" class="sr-only" />
-              <div class="w-10 h-4 bg-secondary rounded-full shadow-inner"></div>
+              <div class="w-10 h-4 bg-termary rounded-full shadow-inner hover:bg-termary-light"></div>
               <div class="dot absolute w-6 h-6 bg-primary-dark rounded-full shadow -left-1 -top-1 transition"></div>
             </div>
             <div class="ml-3 font-semibold">
@@ -77,7 +78,7 @@
         
         <!-- Button by https://codepen.io/mohammadrezaii/pen/xxXXMmp -->
         <div class="col-start-2 flex items-center justify-end pt-3 pr-3">
-          <button id="game-button" class="max-w-fit bg-secondary text-font-light py-2 px-4 rounded transition duration-75 hover:bg-secondary-light hover:text-font" disabled>Start</button>
+          <button id="game-button" class="max-w-fit bg-termary text-font-light py-2 px-4 rounded transition duration-75 hover:bg-termary-light" disabled>Start</button>
         </div>
       </div>
     </section>

@@ -15,7 +15,7 @@ let playing = false;
 let finished = false;
 
 
-let numberOfObject = (window.innerWidth > 768) ? 75 : 50;
+let numberOfObject = (window.innerWidth > 768) ? 35 : 20;
 let gameSpeed = 50;
 let movementSpeed = 2;
 let playSound = false;

@@ -49,7 +49,7 @@ label {
 
 /* Checkbox by https://codepen.io/lhermann/pen/EBGZRZ */
 input:checked ~ .dot {
-    @apply bg-secondary-light;
+    @apply bg-secondary;
     transform: translateX(100%);
 }
 
