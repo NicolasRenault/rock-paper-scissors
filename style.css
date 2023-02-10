@@ -3,62 +3,60 @@
 @tailwind utilities;
 
 .object-title {
-    @apply relative translate-x-10 underline cursor-default before:absolute before:border-3 before:border-solid before:w-[2.5rem] before:h-[2.5rem] before:content-[''] before:top-[5px] before:left-[-45px];
+	@apply relative translate-x-10 cursor-default underline before:absolute before:top-[5px] before:left-[-45px] before:h-[2.5rem] before:w-[2.5rem] before:border-3 before:border-solid before:content-[''];
 }
 .object-title,
 .object-title::before {
-    transition: all 0.5s ease-in-out;
-    transition: color 0s;
+	transition: all 0.5s ease-in-out;
+	transition: color 0s;
 }
 .object-title.rock {
-    @apply decoration-rock hover:text-rock before:border-rock;
+	@apply decoration-rock before:border-rock hover:text-rock;
 }
 .object-title.paper {
-    @apply decoration-paper hover:text-paper before:border-paper;
+	@apply decoration-paper before:border-paper hover:text-paper;
 }
 .object-title.scissors {
-    @apply decoration-scissors hover:text-scissors before:border-scissors;
+	@apply decoration-scissors before:border-scissors hover:text-scissors;
 }
 .object-title.winner {
-    @apply text-6xl before:w-[3rem] before:h-[3rem] before:top-[8px] before:left-[-55px] before:border-4;
+	@apply text-6xl before:top-[8px] before:left-[-55px] before:h-[3rem] before:w-[3rem] before:border-4;
 }
 .object-title.loser {
-    @apply text-3xl before:w-[2.1rem] before:h-[2.1rem] before:top-[-2px] before:left-[-45px];
+	@apply text-3xl before:top-[-2px] before:left-[-45px] before:h-[2.1rem] before:w-[2.1rem];
 }
 
 #game-container .game-object {
-    @apply absolute border-2 border-solid w-[2rem] h-[2rem];
-    transition: top 0.7s linear, left 0.7s linear;
+	@apply absolute h-[2rem] w-[2rem] border-2 border-solid;
+	transition: top 0.7s linear, left 0.7s linear;
 }
 #game-container .game-object.rock {
-    @apply border-rock
+	@apply border-rock;
 }
 #game-container .game-object.paper {
-    @apply border-paper
+	@apply border-paper;
 }
 #game-container .game-object.scissors {
-    @apply border-scissors
+	@apply border-scissors;
 }
 
 /** Prevent label from breaking */
 label {
-    word-spacing: -4px;
+	word-spacing: -4px;
 }
-
-
 
 /* Checkbox by https://codepen.io/lhermann/pen/EBGZRZ */
 input:checked ~ .dot {
-    @apply bg-secondary;
-    transform: translateX(100%);
+	@apply bg-secondary;
+	transform: translateX(100%);
 }
 
 /* Input Number by https://tailwindcomponents.com/component/number-input-counter */
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
 }
-input[type=number] {
-    -moz-appearance: textfield;
+input[type="number"] {
+	-moz-appearance: textfield;
 }
