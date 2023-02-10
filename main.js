@@ -92,8 +92,11 @@ async function play() {
  */
 function removeAllObjects() {
 	let gameContainer = document.getElementById("game-container");
+	let noscript = document.getElementById("game-container-noscript");
 
 	gameContainer.innerHTML = "";
+
+	if (noscript !== null) gameContainer.appendChild(noscript);
 }
 
 /**
